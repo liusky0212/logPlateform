@@ -3,55 +3,43 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    component: () => import('@/layouts/DefaultLayout.vue'),
+    component: () => import('@/layouts/BasicLayout.vue'),
     children: [
       {
         path: '',
-        name: 'Dashboard',
-        component: () => import('@/views/Dashboard.vue')
+        name: 'dashboard',
+        component: () => import('@/views/LogDashboard.vue'),
+        meta: { title: '仪表盘' }
       },
       {
-        path: 'log-analysis',
-        name: 'LogAnalysis',
-        component: () => import('@/views/LogAnalysis.vue')
+        path: 'search',
+        name: 'search',
+        component: () => import('@/views/LogSearch.vue'),
+        meta: { title: '日志查询' }
       },
       {
-        path: 'alert-center',
-        name: 'AlertCenter',
-        component: () => import('@/views/AlertCenter.vue')
+        path: 'analysis',
+        name: 'analysis',
+        component: () => import('@/views/LogAnalysis.vue'),
+        meta: { title: '日志分析' }
       },
       {
-        path: 'system-settings',
-        name: 'SystemSettings',
-        component: () => import('@/views/SystemSettings.vue')
+        path: 'alert',
+        name: 'alert',
+        component: () => import('@/views/AlertManagement.vue'),
+        meta: { title: '告警管理' }
       },
       {
-        path: 'user-management',
-        name: 'UserManagement',
-        component: () => import('@/views/UserManagement.vue')
+        path: 'settings',
+        name: 'settings',
+        component: () => import('@/views/SystemSettings.vue'),
+        meta: { title: '系统设置' }
       }
     ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/Login.vue')
   }
 ]
 
-const router = createRouter({
+export default createRouter({
   history: createWebHistory(),
   routes
-})
-
-// 路由守卫
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token')
-  if (to.path !== '/login' && !token) {
-    next('/login')
-  } else {
-    next()
-  }
-})
-
-export default router 
+}) 
