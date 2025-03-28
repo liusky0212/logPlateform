@@ -57,6 +57,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'LoginPage'
+}
+</script>
+
 <script setup>
 import { reactive, ref } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
