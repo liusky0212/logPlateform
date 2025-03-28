@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "vue": "^3.3.0",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0",
     "vue-router": "^4.0.0",
     "ant-design-vue": "^4.0.0",
     "echarts": "^5.4.0",
