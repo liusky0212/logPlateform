@@ -25,12 +25,11 @@
               <span>{{ metric.unit }}</span>
             </template>
             <template #prefix>
-              <trend
-                :flag="metric.trend"
-                :style="{ marginRight: '8px' }"
-              >
-                {{ metric.percentage }}%
-              </trend>
+              <Trend 
+                :type="metric.trend" 
+                :value="`${metric.percentage}%`"
+                :reverse="metric.name === 'errorRate'"
+              />
             </template>
           </statistic>
         </a-card>
@@ -61,9 +60,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Statistic, Trend } from 'ant-design-vue'
+import { Statistic } from 'ant-design-vue'
 import { LogAnalysisService } from '@/services/logAnalysis'
 import ChartCard from '@/components/ChartCard.vue'
+import Trend from '@/components/Trend.vue'
 
 const metricsLoading = ref(false)
 const performanceMetrics = ref([
@@ -179,6 +179,17 @@ const getSeverityColor = (severity) => {
   return colors[severity] || 'blue'
 }
 
+const getTrendIcon = (trend) => {
+  return trend === 'up' ? 'rise' : 'fall'
+}
+
+const getTrendColor = (trend, value) => {
+  if (trend === 'up') {
+    return value > 0 ? '#f5222d' : '#52c41a'
+  }
+  return value > 0 ? '#52c41a' : '#f5222d'
+}
+
 onMounted(() => {
   loadMetricsData('24h')
 })
@@ -187,5 +198,13 @@ onMounted(() => {
 <style scoped>
 .mt-4 {
   margin-top: 16px;
+}
+
+.trend-icon {
+  margin-right: 4px;
+}
+
+.trend-value {
+  font-size: 14px;
 }
 </style> 
